@@ -1,10 +1,13 @@
 import org.example.linked_list.ListNode
+import org.example.linked_list.elements
 import org.example.linked_list.findLinkedListMidpoint
 import org.example.linked_list.isPalindrome
 import org.example.linked_list.isPalindromeWithLessSpace
+import org.example.linked_list.reverseLinkedList
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 val correctPalindromeLists = mutableListOf(
@@ -64,6 +67,28 @@ class PalindromeWithLessSpaceTest {
         val list = ListNode(1, ListNode(2, ListNode(1)))
         assertEquals(findLinkedListMidpoint(list)?.`val`, 2)
     }
+
+    @Test
+    fun reverseLinkedList_withEmptyLinkedList() {
+        assertNull(reverseLinkedList(null))
+    }
+
+    @Test
+    fun reverseLinkedList_withSingleElementList() {
+        assertEquals( ListNode(10).elements(),reverseLinkedList(ListNode(10)).elements())
+    }
+
+    @Test
+    fun reverseLinkedList_withManyElementList() {
+        for (list in incorrectPalindromeLists) {
+            assertEquals(list.elements().reversed(), reverseLinkedList(list).elements())
+        }
+
+        for (list in correctPalindromeLists) {
+            assertEquals(list.elements(), reverseLinkedList(list).elements())
+        }
+    }
+
     @Test
     fun isPalindromeWithLessSpace_withEmptyLinkedList() {
         assertTrue(isPalindromeWithLessSpace(null))
