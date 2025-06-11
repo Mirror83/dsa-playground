@@ -34,6 +34,7 @@ fun isPalindrome(head: ListNode?): Boolean {
  * The approach is to:
  * - find the middle of the list
  * - split the list at that halfway-point
+ * - reverse one of the two halves
  * - compare the two elements from both halves together.
 **/
 fun isPalindromeWithLessSpace(head: ListNode?) : Boolean {
@@ -69,4 +70,20 @@ fun findLinkedListMidpoint(head: ListNode?): ListNode? {
     }
 
     return slow
+}
+
+fun reverseLinkedList(head: ListNode?): ListNode? {
+    if (head == null) return head
+
+    var prev: ListNode? = null
+    var current = head
+
+    while (current != null) {
+        val next = current.next
+        current.next = prev
+        prev = current
+        current = next
+    }
+
+    return prev
 }
