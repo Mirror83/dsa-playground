@@ -52,7 +52,12 @@ fun isPalindromeWithLessSpace(head: ListNode?) : Boolean {
 }
 
 /**
- * Use the tortoise-and-hare method to find the midpoint of a linked list rooted at `head`**/
+ * Uses the tortoise-and-hare method to find the midpoint of a linked list rooted at `head`.
+ *
+ * I've always understood this method like so:
+ * if something goes twice as fast (the hare) as another (the tortoise) towards the same (linear) goal,
+ * then by the time the faster one reaches the end, the slower one should have covered half the distance.
+ * */
 fun findLinkedListMidpoint(head: ListNode?): ListNode? {
     if (head == null) return head
     var slow = head
