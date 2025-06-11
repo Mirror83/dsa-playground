@@ -38,15 +38,18 @@ fun isPalindrome(head: ListNode?): Boolean {
  * - compare the two elements from both halves together.
 **/
 fun isPalindromeWithLessSpace(head: ListNode?) : Boolean {
-    var current = head
-    var midpoint = findLinkedListMidpoint(head)
+    val midpoint = findLinkedListMidpoint(head)
 
-    var count = 0
-    while (current != null && midpoint != null) {
-        if (current.`val` != midpoint.`val`) return false
-        count += 1
-        current = current.next
-        midpoint = midpoint.next
+    val right = reverseLinkedList(midpoint)
+
+    var currentLeft = head
+    var currentRight = right
+
+    while (currentLeft != null && currentRight != null) {
+        if (currentLeft.`val` != currentRight.`val`) return false
+
+        currentLeft = currentLeft.next
+        currentRight = currentRight.next
     }
 
     return true
