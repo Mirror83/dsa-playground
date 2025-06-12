@@ -1,3 +1,5 @@
+package linked_list
+
 import org.example.linked_list.ListNode
 import org.example.linked_list.elements
 import org.example.linked_list.findLinkedListMidpoint
