@@ -18,10 +18,10 @@ class ClosedBracketsStringTest {
 
     @Test
     fun test_many_lone_jokers() {
-        assertTrue( closedBrackets("JJJJJJJ"))
-        assertTrue( closedBrackets("JJJJJJJJJ)"))
-        assertTrue( closedBrackets("(JJJJJ"))
-        assertTrue( closedBrackets("(JJJJJJJJJJ)"))
+        assertTrue(closedBrackets("JJJJJJJ"))
+        assertTrue(closedBrackets("JJJJJJJJJ)"))
+        assertTrue(closedBrackets("(JJJJJ"))
+        assertTrue(closedBrackets("(JJJJJJJJJJ)"))
     }
 
     @Test
@@ -43,5 +43,12 @@ class ClosedBracketsStringTest {
         assertTrue(closedBrackets("J)(J"))
         assertFalse(closedBrackets("(J()J(()(J"))
         assertFalse(closedBrackets("J(JJ()J((J"))
+    }
+
+    @Test
+    fun test_code_wars_easy() {
+        assertTrue(closedBrackets("((J)J)"))
+        assertTrue(closedBrackets("(J)J((J)(J"))
+        assertTrue(closedBrackets("J)JJ(JJ"))
     }
 }
