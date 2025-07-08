@@ -1,31 +1,34 @@
 package org.example.stack
 
-import kotlin.collections.ArrayDeque
 
-fun closedBrackets(s: String): Boolean {
-    val stack = ArrayDeque<Char>()
-    for (letter in s) {
-        if (letter != ')') {
-            // Also add J's, may be used to match with ')' later
-            stack.addLast(letter)
-        } else {
-            if (stack.isEmpty()) return false
-            // Also remove J's (found match with ')')
-            stack.removeLast()
-        }
+fun recursiveClosedBrackets(s: String): Boolean {
+    // The empty string is trivially balanced
+    if (s.isEmpty()) return true
+
+    val openBracketCount = openBracketCount(s.reversed())
+    return openBracketCount == 0
+}
+
+private fun openBracketCount(s: String): Int {
+    println(s)
+    if (s.length > 1) {
+        val count = openBracketCount(s.slice(1..<s.length))
+        // We have too many right brackets to ever balance with the left brackets
+        if (count < 0) return -1
+        return evaluateBracket(s[0]) + count
+    } else {
+        return evaluateBracket(s[0])
     }
+}
 
-    if (stack.isNotEmpty()) {
-        var current = stack.removeLast()
-        // If were left with a single unbalanced parenthesis, return false
-        if (current != 'J' && stack.isEmpty()) { return false }
-        // If there are J's remaining in the stack, match them with the previous
-        // '(' or J's, and continue on until there are no more J's on top of the stack
-        // or the stack is empty
-        while (current == 'J' && stack.isNotEmpty()) {
-            current = stack.removeLast()
-        }
+private fun evaluateBracket(c: Char): Int {
+    return if (c == '(') {
+        1
+    } else {
+        -1
     }
+}
 
-    return stack.isEmpty()
+fun main() {
+    println(recursiveClosedBrackets(")("))
 }

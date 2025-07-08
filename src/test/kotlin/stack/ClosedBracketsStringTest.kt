@@ -1,6 +1,6 @@
 package stack
 
-import org.example.stack.closedBrackets
+import org.example.stack.recursiveClosedBrackets
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -8,47 +8,56 @@ import kotlin.test.assertTrue
 class ClosedBracketsStringTest {
     @Test
     fun test_empty_string() {
-        assertTrue(closedBrackets(""))
+        assertTrue(recursiveClosedBrackets(""))
     }
 
     @Test
     fun test_lone_joker() {
-        assertTrue( closedBrackets("J"))
+        assertTrue( recursiveClosedBrackets("J"))
     }
 
     @Test
     fun test_many_lone_jokers() {
-        assertTrue(closedBrackets("JJJJJJJ"))
-        assertTrue(closedBrackets("JJJJJJJJJ)"))
-        assertTrue(closedBrackets("(JJJJJ"))
-        assertTrue(closedBrackets("(JJJJJJJJJJ)"))
+        assertTrue(recursiveClosedBrackets("JJJJJJJ"))
+        assertTrue(recursiveClosedBrackets("JJJJJJJJJ)"))
+        assertTrue(recursiveClosedBrackets("(JJJJJ"))
+        assertTrue(recursiveClosedBrackets("(JJJJJJJJJJ)"))
     }
 
     @Test
     fun test_trivial_balanced_string() {
-        assertTrue( closedBrackets("()"))
+        assertTrue( recursiveClosedBrackets("()"))
     }
 
     @Test
     fun test_trivial_unbalanced_string() {
-        assertFalse(closedBrackets("("))
-        assertFalse(closedBrackets(")"))
-        assertFalse(closedBrackets(")("))
+        assertFalse(recursiveClosedBrackets("("))
+        assertFalse(recursiveClosedBrackets(")"))
+        assertFalse(recursiveClosedBrackets(")("))
+    }
+
+    @Test
+    fun test_assorted_without_joker() {
+        assertTrue(recursiveClosedBrackets("(())"))
+        assertTrue(recursiveClosedBrackets("()()"))
+        assertFalse(recursiveClosedBrackets(")()"))
+        assertFalse(recursiveClosedBrackets("(()(()("))
+        assertFalse(recursiveClosedBrackets("(()(("))
     }
 
     @Test
     fun test_assorted_with_joker() {
-        assertTrue(closedBrackets("(J))"))
-        assertFalse(closedBrackets("()J("))
-        assertTrue(closedBrackets("J)(J"))
-        assertFalse(closedBrackets("(J()J(()(J"))
-        assertFalse(closedBrackets("J(JJ()J((J"))
+        assertTrue(recursiveClosedBrackets("(J))"))
+        assertFalse(recursiveClosedBrackets("()J("))
+        assertTrue(recursiveClosedBrackets("J)(J"))
+        assertFalse(recursiveClosedBrackets("(J()J(()(J"))
+        assertFalse(recursiveClosedBrackets("J(JJ()J((J"))
     }
 
     @Test
     fun test_code_wars_easy() {
-        assertTrue(closedBrackets("((J)J)"))
-        assertTrue(closedBrackets("(J)J((J)(J"))
-        assertTrue(closedBrackets("J)JJ(JJ"))
+        assertTrue(recursiveClosedBrackets("((J)J)"))
+        assertTrue(recursiveClosedBrackets("(J)J((J)(J"))
+        assertTrue(recursiveClosedBrackets("J)JJ(JJ"))
     }
 }
