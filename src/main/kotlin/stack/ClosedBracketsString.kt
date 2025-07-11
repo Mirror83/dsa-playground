@@ -49,18 +49,18 @@ fun closedBrackets(s: String): Boolean {
 
 /** Checks whether a string of just parenthesis is balanced
  * */
-fun recursiveClosedBrackets(s: String): Boolean {
+fun recursiveClosedBracketsWithoutJoker(s: String): Boolean {
     // The empty string is trivially balanced
     if (s.isEmpty()) return true
 
-    val openBracketCount = openBracketCount(s.reversed())
+    val openBracketCount = openBracketCountWithoutJoker(s.reversed())
     return openBracketCount == 0
 }
 
-private fun openBracketCount(s: String): Int {
+private fun openBracketCountWithoutJoker(s: String): Int {
     println(s)
     if (s.length > 1) {
-        val count = openBracketCount(s.slice(1..<s.length))
+        val count = openBracketCountWithoutJoker(s.slice(1..<s.length))
         // We have too many right brackets to ever balance with the left brackets
         if (count < 0) return -1
         return evaluateBracket(s[0]) + count
@@ -77,6 +77,42 @@ private fun evaluateBracket(c: Char): Int {
     }
 }
 
+fun recursiveClosedBrackets(s: String): Boolean {
+    if (s.isEmpty()) return true
+
+    return evaluateAllCombinations(s)
+}
+
+private fun evaluateAllCombinations(
+    s: String, index: Int = 0, openBracketCount: Int = 0): Boolean {
+    if (openBracketCount < 0) {
+        // It means we have encountered a closing bracket without a corresponding
+        // closing bracket
+        return false
+    }
+    if (index >= s.length) {
+        return openBracketCount == 0
+    }
+    val currentChar = s[index]
+
+    return when (currentChar) {
+        '(' -> {
+            evaluateAllCombinations(s, index + 1, openBracketCount + 1)
+        }
+        ')' -> {
+            evaluateAllCombinations(s, index + 1, openBracketCount - 1)
+        }
+        // Here, we assume that the string does not contain invalid characters
+        else -> {
+            // When encountering a Joker, we consider what would happen when replacing it
+            // will all the possible symbols
+            evaluateAllCombinations(s, index + 1, openBracketCount + 1)
+                    || evaluateAllCombinations(s, index + 1, openBracketCount - 1)
+                    || evaluateAllCombinations(s, index + 1, openBracketCount)
+        }
+    }
+}
+
 fun main() {
-    println(recursiveClosedBrackets(")("))
+    println(recursiveClosedBracketsWithoutJoker(")("))
 }
